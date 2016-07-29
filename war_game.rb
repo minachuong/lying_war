@@ -4,9 +4,9 @@ require_relative 'io_helpers'
 # file = File.open("small-data-set.txt", "r")
 # contents = file.read
 # puts contents
-number_of_blocks = 6
-noami = [0.27, 0.55, 0.91, 0.33, 0.52, 0.30]
-ken = [0.85, 0.45, 0.06, 0.24, 0.12, 0.88]
+# number_of_blocks = 6
+# noami = [0.27, 0.55, 0.91, 0.33, 0.52, 0.30]
+# ken = [0.85, 0.45, 0.06, 0.24, 0.12, 0.88]
 
 # data_set = DataSet.build(:small)
 data_set = DataSet.build(:large)
@@ -36,7 +36,7 @@ def regular_war(ken_array, naomi_array)
     end
     k_sorted.delete(chosen_ken)
   end
-  puts naomi_wins
+  naomi_wins
 end
 
 def naomi_pick_block(chosen_ken, naomi_array)
@@ -63,13 +63,9 @@ end
 def lying_war(ken_array, naomi_array)
   sorted_n = naomi_array.sort!{ |first, second| first <=> second }
   sorted_k = ken_array.sort!{ |first, second| first <=> second }
-  p naomi_wins = max_naomi_wins(sorted_k, sorted_n)
+  naomi_wins = max_naomi_wins(sorted_k, sorted_n)
 end
 
-data_set.cases.each do |game_case|
-  regular_war(game_case.ken_block_weights, game_case.naomi_block_weights)
-end
-
-data_set.cases.each do |game_case|
-  lying_war(game_case.ken_block_weights, game_case.naomi_block_weights)
+data_set.cases.each_with_index do |game_case, i|
+  puts "Case #{i+1}: #{regular_war(game_case.ken_block_weights, game_case.naomi_block_weights)} #{lying_war(game_case.ken_block_weights, game_case.naomi_block_weights)}"
 end
